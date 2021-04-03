@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
 const User = require('../models/User.model');
 const { hashPassword, verifyPassword } = require('../utils/password');
 const { signKey, verifyKey } = require('../utils/token');
@@ -33,7 +32,7 @@ router.post('/login', async (req, res) => {
 
     const token = signKey(currentUser[0])
 
-    res.header('Set-Cookie', `token=${token}`)
+    res.cookie("token", token)
     res.send({ token: token })
 })
 
