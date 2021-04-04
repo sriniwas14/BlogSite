@@ -1,0 +1,125 @@
+$primary-color: black;
+$primary-text: white;
+$secondary-color: rebeccapurple;
+$secondary-color-hover: lighten($secondary-color, 8%);
+$secondary-text: white;
+$modalBackgroundColor: #f5deb3; 
+$brandingFont: "Romanesco";
+$contentFont: "Roboto";
+
+$appBorderRadius: 10px;
+
+h1,h2,h3 { font-family: "Roboto"; font-weight: 300;  }
+
+* { outline: none !important; }
+
+.csNavBar {
+  background: $primary-color;
+  color: $primary-text;
+  padding: 10px;
+  .csLeftBox {
+    font-family: $brandingFont;
+    font-size: 28px;
+  }
+  .csRightBox {
+    display: flex;
+    flex-direction: row-reverse;
+    margin: auto;
+    button {
+      color: $primary-text !important;
+      display: inline-block;
+      padding: 12px 16px;
+      border: 0;
+      border-radius: $appBorderRadius;
+      background-color: transparent;
+      transition: 0.2s ease-out;
+      &:hover {
+        background-color: $primary-text;
+        color: $primary-color !important;
+        transition: 0.2s ease-in;
+      }
+    }
+  }
+}
+
+.modal-header {
+  display: initial !important;
+  border-bottom: 0;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 12px;
+    border: 0 !important;
+    border-radius: $appBorderRadius !important;
+    .csHeaderBranding {
+      font-family: $brandingFont !important;
+      text-align: center;
+    }
+    .csHeaderTitle {
+      text-align: left;
+      padding: 15px 0 0 0;
+      padding-left: 0px;
+      cursor: default;
+      font-size: 16px;
+      opacity: 0.69;
+      font-weight: 700;
+      padding-left: 5px;
+      margin-bottom: -5px;
+
+    }
+}
+.close {
+  position: absolute;
+  top: 45px !important;
+  right: 45px !important;
+  padding: 4px 9px !important;
+  background: $secondary-color !important;
+  color: white !important;
+  opacity: 1 !important;
+  border-radius: 50% !important;
+  transition: 0.2s ease-out ;
+  &:hover {
+    background: $secondary-color-hover !important;
+    transition: 0.2s ease-in ;
+    transform: scale(1.05);
+  }
+}
+
+.csInput {
+  padding: 12px;
+  width: 100%;
+  margin: 8px 0;
+  border: 0;
+  border-radius: $appBorderRadius;
+  outline: none;
+}
+
+.csText {
+  background-color: #f0f0f0;
+  border: 2px solid #f0f0f0;
+  transition: 0.2s ease-out;
+  &:hover {
+    transform: scale(1.04);
+    transition: 0.2s ease-in;
+  }
+  
+  &::placeholder {
+    text-align: center;
+  }
+}
+
+.csModal {
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(40px) !important;
+}
+
+.csButton {
+  background-color: $secondary-color;
+  color: $secondary-text;
+  transition: 0.2s ease-out;
+  &:hover {
+    background-color: $secondary-color-hover;
+    transition: 0.2s ease-in;
+  }
+}
