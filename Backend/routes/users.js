@@ -1,8 +1,13 @@
+const fs = require('fs');
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User.model');
 const { hashPassword, verifyPassword } = require('../utils/password');
 const { signKey, verifyKey } = require('../utils/token');
+
+const multer = require('multer');
+const { multerStorage, resizeAndConvert } = require('../utils/fileUtils')
+const upload = multer({ storage:multerStorage('profile') })
 
 // Create New User
 router.post('/', async (req, res) => {
@@ -35,5 +40,19 @@ router.post('/login', async (req, res) => {
     res.cookie("token", token)
     res.send({ token: token })
 })
+
+router.post('/profile/:userId', upload.single('avatar'),async (req, res) => {
+    const newFileName = req.file.path.split('_')
+    resizeAndConvert([200,200], newFileName, req.file.path)
+        .then((err, result) =>{
+            // Delete Temp File
+            res.send({ success: true })
+            fs.unlinkSync(req.file.path)
+        }).catch((err) =>{
+            res.send({ success: false, err: err.toString() })
+            fs.unlinkSync(req.file.path)
+        })
+
+} )
 
 module.exports = router;
