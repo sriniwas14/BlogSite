@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const PostSchema = new Schema({
     title: String,
     content: String,
+    featuredImage: String,
     pubishedOn: { type: Date, default: Date.now },
     createdBy: String,
     comments: [

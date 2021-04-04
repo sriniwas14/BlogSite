@@ -11,13 +11,17 @@ const isPostByUser = async (userId, postId) => {
 }
 
 router.get('/', (req, res) => {
-    res.send("Hello From Posts!")
+    Post.find((err, posts) => {
+        if (err) return res.sendStatus(500);
+        res.send({ success: true, data: posts})
+    })
 })
 
 router.post('/', (req, res) => {
     Post.create({
         title: req.body.title,
         content: req.body.content,
+        featuredImage: req.body.featuredImage,
         createdBy: req.body.createdBy
     }, (err, post)=> {
         if (err) return res.sendStatus(500);
