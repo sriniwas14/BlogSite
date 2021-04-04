@@ -9,7 +9,7 @@ const PostSchema = new Schema({
     comments: [
         {
             userId: String,
-            profilePic: String,
+            profilePicture: String,
             content: String,
             postedOn: { type: Date, default: Date.now }
         }

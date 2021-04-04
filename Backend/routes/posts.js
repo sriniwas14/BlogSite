@@ -45,4 +45,12 @@ router.delete('/', (req, res) => {
     })
 })
 
+// Comments
+
+router.post('/:id/comments', async (req, res)=> {
+    const result = await Post.updateOne({ _id: req.params.id }, { $push: { comments: { userId: req.body.userId, profilePicture: req.body.profilePicture, content: req.body.content } }})
+    if(result.n===1) return res.send({ success: true})
+    return res.send({ success: false })
+})
+
 module.exports = router;
