@@ -42,16 +42,19 @@ export function useDataUpdate() {
 
 export function DataProvider({ children }) {
     const [posts, setPosts] = useState(postsList)
+    const [userDetails, setUserDetails] = useState({ loggedIn: false })
 
 
     return (
         <DataContext.Provider value={
             {
+                userDetails,
                 posts
             }
         }>
             <DataUpdaterContext.Provider value={
                 {
+                    setUserDetails,
                     setPosts
                 }
             }>

@@ -23,8 +23,8 @@ export default function TopBar() {
                     </Row>
                 </Container>
             </Nav>
-            <OverlayModal title="Login" show={loginVisible} onClose={()=> setLoginVisible(false)} render={<LoginForm />} />
-            <OverlayModal title="Register" show={registerVisible} onClose={()=> setRegisterVisible(false)} render={<RegisterForm />} />
+            <OverlayModal title="Login" show={loginVisible} onClose={()=> setLoginVisible(false)} render={<LoginForm closeModal={()=> setLoginVisible(false)} />} />
+            <OverlayModal title="Register" show={registerVisible} onClose={()=> setRegisterVisible(false)} render={<RegisterForm  closeModal={()=> setRegisterVisible(false)} />} />
         </div>
     )
 }

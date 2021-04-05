@@ -2,6 +2,7 @@ $primary-color: black;
 $primary-text: white;
 $secondary-color: rebeccapurple;
 $secondary-color-hover: lighten($secondary-color, 8%);
+$error-color: red;
 $secondary-text: white;
 $modalBackgroundColor: #f5deb3; 
 $brandingFont: "Romanesco";
@@ -70,7 +71,7 @@ h1,h2,h3 { font-family: "Roboto"; font-weight: 300 !important;  }
 
     }
 }
-.close {
+.modal-header .close {
   position: absolute;
   top: 45px !important;
   right: 45px !important;
@@ -123,6 +124,12 @@ h1,h2,h3 { font-family: "Roboto"; font-weight: 300 !important;  }
     background-color: $secondary-color-hover;
     transition: 0.2s ease-in;
   }
+}
+
+.csFormError {
+  padding: 10px;
+  margin: 0 !important;
+  border-radius: $appBorderRadius !important;
 }
 
 // Post Card

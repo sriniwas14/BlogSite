@@ -1,10 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
-import { useData } from '../DataContext'
+import { useData, useDataUpdate } from '../DataContext'
 import PostCard from '../Elements/PostCard'
+import axiosInstance from '../utils/Api';
 
 export default function Home() {
     const dataContext = useData()
+    const dataUpdaterContext = useDataUpdate()
+
+    useEffect(() => {
+        axiosInstance.get("/posts")
+            .then((response) => {
+                if (!response.data.success) return 
+                dataUpdaterContext.setPosts(response.data.data)
+            })
+            .catch(err => {
+                console.log("Err ", err)
+            })
+    }, [])
 
     return (
         <Container>
