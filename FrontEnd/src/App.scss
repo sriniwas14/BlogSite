@@ -9,7 +9,7 @@ $contentFont: "Roboto";
 
 $appBorderRadius: 10px;
 
-h1,h2,h3 { font-family: "Roboto"; font-weight: 300;  }
+h1,h2,h3 { font-family: "Roboto"; font-weight: 300 !important;  }
 
 * { outline: none !important; }
 
@@ -17,6 +17,7 @@ h1,h2,h3 { font-family: "Roboto"; font-weight: 300;  }
   background: $primary-color;
   color: $primary-text;
   padding: 10px;
+  margin-bottom: 10px !important;
   .csLeftBox {
     font-family: $brandingFont;
     font-size: 28px;
@@ -121,5 +122,43 @@ h1,h2,h3 { font-family: "Roboto"; font-weight: 300;  }
   &:hover {
     background-color: $secondary-color-hover;
     transition: 0.2s ease-in;
+  }
+}
+
+// Post Card
+
+.csPostCard {
+  margin: 10px 0;
+  .csPostDate {
+    font-weight: bold;
+    color: gray;
+    margin: 15px 0;
+  }
+  .csPostImage {
+    border-radius: $appBorderRadius;
+
+  }
+  .csPostUserInfoContainer {
+    display: flex;
+    .csPostUserInfoProfilePic {
+      height: 65px;
+    }
+    .csPostUserInfo {
+      display: flex;
+      padding-left: 15px;
+      justify-content: center;
+      flex-direction: column;
+      p {
+        margin: 0;
+      }
+      .csPostUserInfoName {
+        font-size: 17px;
+      }
+      .csPostUserInfoRole {
+        font-size: 13px;
+        font-weight: bold;
+        color: grey;
+      }
+    }
   }
 }

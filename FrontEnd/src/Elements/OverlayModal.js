@@ -2,7 +2,6 @@ import { Modal } from 'react-bootstrap'
 import React from 'react'
 
 export default function OverlayModal(props) {
-    console.log("PROPS ", props)
     return (
         <div>
             <Modal className="csModal" show={props.show} onHide={props.onClose} centered>
