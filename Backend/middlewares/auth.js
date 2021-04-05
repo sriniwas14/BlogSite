@@ -1,6 +1,6 @@
 const { verifyKey } = require("../utils/token")
 
-let pathExceptions = ['login', 'register']
+let pathExceptions = ['login', 'register','profile','comments','posts']
 
 exports.authChecker = (req, res, next) => {
     for (path of pathExceptions){

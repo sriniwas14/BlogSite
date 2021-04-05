@@ -28,10 +28,13 @@ router.post('/', async (req, res) => {
 })
 
 router.post('/login', async (req, res) => {
-    const currentUser = await User.find({ username: req.body.username })
-    const isPasswordCorrect = await verifyPassword(req.body.password, currentUser[0].password)
+    const currentUser = await User.findOne({ username: req.body.username })
+
+    if(!currentUser) return res.send({ success: false, err: "User Not Found"})
+
+    const isPasswordCorrect = await verifyPassword(req.body.password, currentUser.password)
     
-    if(!isPasswordCorrect) return res.status(401).send({ err: "mismatch" })
+    if(!isPasswordCorrect) return res.send({ err: "Wrong Username or Password" })
 
     currentUser[0].password = undefined
 

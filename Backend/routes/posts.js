@@ -11,9 +11,11 @@ const isPostByUser = async (userId, postId) => {
 }
 
 router.get('/', (req, res) => {
-    Post.find((err, posts) => {
+    Post.aggregate([
+        { $lookup: { from: "users", localField: "createdBy", foreignField: "_id", as: "userInfo" }},{ $unwind: "$userInfo" } 
+    ], (err, result) => {
         if (err) return res.sendStatus(500);
-        res.send({ success: true, data: posts})
+        res.send({ success: true, data: result})
     })
 })
 
