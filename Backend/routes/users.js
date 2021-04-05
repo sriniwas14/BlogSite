@@ -36,12 +36,12 @@ router.post('/login', async (req, res) => {
     
     if(!isPasswordCorrect) return res.send({ err: "Wrong Username or Password" })
 
-    currentUser[0].password = undefined
+    currentUser.password = undefined
 
-    const token = signKey(currentUser[0])
+    const token = signKey(currentUser)
 
     res.cookie("token", token)
-    res.send({ token: token })
+    res.send({ success: true, token: token })
 })
 
 router.post('/profile/:userId', upload.single('avatar'),async (req, res) => {
