@@ -19,6 +19,8 @@ export default function Home() {
             })
     }, [])
 
+    if(dataContext.posts.length === 0) return (<></>) 
+
     return (
         <Container>
             <Row>
