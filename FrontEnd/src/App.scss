@@ -266,3 +266,12 @@ h1,h2,h3 { font-family: "Roboto"; font-weight: 300 !important;  }
     }
   }
 }
+
+.csLoader {
+  .modal-dialog {
+    width: min-content !important;
+  }
+  .modal-body {
+    padding: 4px !important;
+  }
+}
