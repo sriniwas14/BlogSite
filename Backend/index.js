@@ -14,7 +14,7 @@ app.use(bodyParser.json())
 app.use(cookieParser())
 
 app.use(authChecker)
-
+app.use(express.static('static'))
 // Routes
 app.use('/users', require('./routes/users'))
 app.use('/posts', require('./routes/posts'))

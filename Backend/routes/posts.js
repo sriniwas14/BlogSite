@@ -1,6 +1,11 @@
 const express = require('express');
+const fs = require('fs');
 const router = express.Router();
 const Post = require('../models/Post.model');
+
+const multer = require('multer');
+const { multerStorage, resizeAndConvert } = require('../utils/fileUtils')
+const upload = multer({ storage:multerStorage('featured','featured') })
 
 const isPostByUser = async (userId, postId) => {
     const currentPost = await Post.findOne({ postId })
@@ -26,14 +31,14 @@ router.post('/', (req, res) => {
         createdBy: req.body.createdBy
     }, (err, post)=> {
         if (err) return res.sendStatus(500);
-        res.send(post)
+        res.send({ success: true, data: post })
     })
 })
 
 router.put('/', async (req, res) => {
-    if(!isPostByUser(req.token._id, req.body.postId)) return res.sendStatus(401)
+    // if(!isPostByUser(req.token._id, req.body.postId)) return res.sendStatus(401)
 
-    Post.updateOne({ _id: req.body.postId }, { $set: { title: req.body.title, excerpt: req.body.excerpt, content: req.body.content } } , (err, result) => {
+    Post.updateOne({ _id: req.body._id }, { $set: { title: req.body.title, excerpt: req.body.excerpt, content: req.body.content } } , (err, result) => {
         if(err) return res.sendStatus(500);
         if(result.n===1) return res.send({ success: true })
         res.send({ success: false })
@@ -49,6 +54,28 @@ router.delete('/', (req, res) => {
         res.send({ success: false })
     })
 })
+
+router.post('/:postId/upload', upload.single('featured'),async (req, res) => {
+    // if(!isPostByUser(req.token._id, req.params.postId)) return res.sendStatus(401)
+
+    let newFileName = req.file.path.split('_')[0]+'.jpg'
+    newFileName = newFileName.replace(/static/g, '')
+    resizeAndConvert([800,500], newFileName, req.file.path)
+        .then((err, result) =>{
+            // Delete Temp File
+            fs.unlinkSync(req.file.path)
+        }).catch((err) =>{
+            fs.unlinkSync(req.file.path)
+            return res.send({ success: false, err})
+        })
+
+        Post.updateOne({ _id: req.params.postId }, { $set: { featuredImage: newFileName } } , (err, result) => {
+            if(err) return res.sendStatus(500);
+            if(result.n===1) return res.send({ success: true })
+            res.send({ success: false })
+        })
+
+} )
 
 // Comments
 

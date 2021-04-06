@@ -7,7 +7,7 @@ const { signKey, verifyKey } = require('../utils/token');
 
 const multer = require('multer');
 const { multerStorage, resizeAndConvert } = require('../utils/fileUtils')
-const upload = multer({ storage:multerStorage('profile') })
+const upload = multer({ storage:multerStorage('profile','profile') })
 
 // Create New User
 router.post('/', async (req, res) => {
@@ -45,7 +45,8 @@ router.post('/login', async (req, res) => {
 })
 
 router.post('/profile/:userId', upload.single('avatar'),async (req, res) => {
-    const newFileName = req.file.path.split('_')
+    let newFileName = req.file.path.split('_')[0]+'.jpg'
+    newFileName = newFileName.replace(/static/g, '')
     resizeAndConvert([200,200], newFileName, req.file.path)
         .then((err, result) =>{
             // Delete Temp File
