@@ -3,10 +3,11 @@ const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
     title: String,
+    excerpt: String,
     content: String,
     featuredImage: String,
     pubishedOn: { type: Date, default: Date.now },
-    createdBy: String,
+    createdBy: { type: Schema.Types.ObjectId, ref: "user" },
     comments: [
         {
             userId: String,

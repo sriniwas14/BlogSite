@@ -22,8 +22,7 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     Post.create({
         title: req.body.title,
-        content: req.body.content,
-        featuredImage: req.body.featuredImage,
+        excerpt: req.body.excerpt,
         createdBy: req.body.createdBy
     }, (err, post)=> {
         if (err) return res.sendStatus(500);
@@ -34,7 +33,7 @@ router.post('/', (req, res) => {
 router.put('/', async (req, res) => {
     if(!isPostByUser(req.token._id, req.body.postId)) return res.sendStatus(401)
 
-    Post.updateOne({ _id: req.body.postId }, { $set: { title: req.body.title, content: req.body.content } } , (err, result) => {
+    Post.updateOne({ _id: req.body.postId }, { $set: { title: req.body.title, excerpt: req.body.excerpt, content: req.body.content } } , (err, result) => {
         if(err) return res.sendStatus(500);
         if(result.n===1) return res.send({ success: true })
         res.send({ success: false })

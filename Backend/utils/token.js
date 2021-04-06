@@ -1,7 +1,6 @@
 const { TokenExpiredError, sign, verify } = require("jsonwebtoken")
 
 exports.signKey = (data, expiresIn) => {
-    console.log("DATA ", data)
     var token = sign(data.toJSON(), process.env.JWT_KEY, { expiresIn: expiresIn ? expiresIn : process.env.JWT_EXPIRATION })
     return token
 }
