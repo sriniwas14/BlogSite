@@ -8,10 +8,12 @@ import Home from "./Pages/Home"
 import SinglePost from "./Pages/SinglePost"
 import MyPosts from "./Pages/MyPosts"
 import EditPost from "./Pages/EditPost"
+import TopBar from './Elements/TopBar';
 
 export default function Routes() {
     return (
         <Router>
+            <TopBar />
             <Switch>
                 <Route exact path="/"><Home /></Route>
                 <Route path="/posts/:postId"><SinglePost /></Route>

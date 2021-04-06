@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import Routes from './Routes';
 import { DataProvider } from './DataContext';
 import './App.scss';
-import TopBar from './Elements/TopBar';
 import AuthChecker from './AuthChecker';
 
 function App() {
@@ -10,7 +9,6 @@ function App() {
     <div className="App">
       <DataProvider>
         <AuthChecker>
-          <TopBar />
           <Routes />
         </AuthChecker>
       </DataProvider>
