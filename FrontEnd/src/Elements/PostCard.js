@@ -2,6 +2,7 @@ import React from 'react'
 import { Col, Row } from 'react-bootstrap'
 import moment from 'moment'
 import profilePlaceholder from '../assets/Profile.svg'
+import { Link } from 'react-router-dom'
 
 export default function PostCard(props) {
     const post = props.post
@@ -11,9 +12,10 @@ export default function PostCard(props) {
     }
 
     return (
+        <Link className="csCardLink" to={`/posts/${post._id}`}>
         <Row className="csPostCard">
             <Col md={props.fullWidth ? 8 : 12}>
-                <img alt={post.excerpt} className="csPostImage" src={post.featuredImage} style={{ width: "100%" }} />
+                <img alt={post.excerpt} className="csPostImage" src={`${process.env.REACT_APP_API_URL}/uploads/featured/default.jpg`} style={{ width: "100%" }} />
             </Col>  
             <Col md={props.fullWidth ? 4 : 12}>
                 <p className="csPostDate">Published {formatDate(post.postedOn)}</p>
@@ -28,5 +30,6 @@ export default function PostCard(props) {
                 </div>
             </Col>
         </Row>
+        </Link>
     )
 }
