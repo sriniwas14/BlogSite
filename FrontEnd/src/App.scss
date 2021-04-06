@@ -242,3 +242,27 @@ h1,h2,h3 { font-family: "Roboto"; font-weight: 300 !important;  }
     justify-content: space-evenly;
   }
 }
+
+.csSinglePostPage {
+  img {
+    border-radius: $appBorderRadius;
+    width: 100%;
+  }
+  .csPostDate {
+    font-weight: bold;
+    color: gray;
+    margin: 20px 0;
+  }
+  .csPostCard {
+    margin-top: 0 !important;
+    .csPostDate {
+      margin: 5px 0;
+    }
+    .csPostTitle {
+      font-size: 22px;
+    }
+    .csPostUserInfoContainer {
+      display: none;
+    }
+  }
+}
