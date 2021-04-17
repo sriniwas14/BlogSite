@@ -1,6 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const router = express.Router();
+const mongoose = require('mongoose')
 const Post = require('../models/Post.model');
 
 const multer = require('multer');
@@ -21,6 +22,17 @@ router.get('/', (req, res) => {
     ], (err, result) => {
         if (err) return res.sendStatus(500);
         res.send({ success: true, data: result})
+    })
+})
+
+router.get('/:postId', (req, res) => {
+    Post.aggregate([
+        { $lookup: { from: "users", localField: "createdBy", foreignField: "_id", as: "userInfo" }}
+        ,{ $unwind: "$userInfo" }
+        ,{ $match: { _id: mongoose.Types.ObjectId(req.params.postId) }  }
+    ], (err, result) => {
+        if (err) return res.sendStatus(500);
+        res.send({ success: true, data: result[0]})
     })
 })
 
