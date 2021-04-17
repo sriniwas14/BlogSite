@@ -10,7 +10,7 @@ export default function MyPostCard({ post }) {
                 <Container>
                     <Row>
                         <Col sm={2}>
-                            <img style={{ width: "100%" }} src={`${process.env.REACT_APP_API_URL}/uploads/featured/default.jpg`} />    
+                            <img style={{ width: "100%" }} src={`${process.env.REACT_APP_API_URL}${post.featuredImage}`} />    
                         </Col>    
                         <Col className="csMPCDetails" sm={8}>
                             <h3>{ post.title }</h3>

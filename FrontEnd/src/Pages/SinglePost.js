@@ -23,7 +23,7 @@ export default function SinglePost() {
             <Container className="csSinglePostPage">
                 <Row>
                     <Col sm={8}>
-                        <img src={`${process.env.REACT_APP_API_URL}/uploads/featured/default.jpg`} />
+                        <img src={`${process.env.REACT_APP_API_URL}${currentPost.featuredImage}`} />
                         <p className="csPostDate">Published {moment(currentPost.postedOn).format('LL')}</p>
                         <h2>{currentPost?.title}</h2>
                         <p>{currentPost?.content}</p>

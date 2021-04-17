@@ -15,7 +15,7 @@ export default function PostCard(props) {
         <Link className="csCardLink" to={`/posts/${post._id}`}>
         <Row className="csPostCard">
             <Col md={props.fullWidth ? 8 : 12}>
-                <img alt={post.excerpt} className="csPostImage" src={`${process.env.REACT_APP_API_URL}/uploads/featured/default.jpg`} style={{ width: "100%" }} />
+                <img alt={post.excerpt} className="csPostImage" src={`${process.env.REACT_APP_API_URL}${post.featuredImage}`} style={{ width: "100%" }} />
             </Col>  
             <Col md={props.fullWidth ? 4 : 12}>
                 <p className="csPostDate">Published {formatDate(post.postedOn)}</p>
