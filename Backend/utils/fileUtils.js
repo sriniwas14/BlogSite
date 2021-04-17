@@ -20,5 +20,5 @@ module.exports.resizeAndConvert = async (imageSize, newFileName, oldFilePath) =>
     return sharp(oldFilePath)
         .resize(imageSize[0],imageSize[1])
         .jpeg({quality: 50})
-        .toFile(newFileName)
+        .toFile(`static${newFileName}`)
 }
