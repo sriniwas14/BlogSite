@@ -5,18 +5,35 @@ import { useParams } from "react-router-dom";
 import axiosInstance from "../utils/Api";
 import { useData } from "../DataContext";
 
+
 export default function EditPost() {
   const { posts } = useData();
+
+  const { postId } = useParams();
+
   const [currentPost, setCurrentPost] = useState({});
   const [loading, setLoading] = useState(false);
   const [pictures, setPictures] = useState(null);
 
-  let { postId } = useParams();
-
+  // Load Post from Post Array
   useEffect(() => {
+    if(posts.length===0) return
     const post = posts.filter((p) => p._id === postId);
     setCurrentPost(post[0]);
   }, []);
+
+  // Load Post from Database
+  useEffect(() => {
+    if(posts.length>0) return
+    axiosInstance.get(`/posts/${postId}`, {})
+    .then((response) => {
+        if (!response.data.success) return 
+        setCurrentPost(response.data.data)
+    })
+    .catch(err => {
+        console.log("Err ", err)
+    })
+  }, [])
 
   const handleChange = (e) => {
     setCurrentPost((post) => ({ ...post, [e.target.name]: e.target.value }));
@@ -51,7 +68,9 @@ export default function EditPost() {
       .then((response) => {
         alert("The file is successfully uploaded");
       })
-      .catch((error) => {});
+      .catch((error) => {
+        console.log("Err ", error);
+      });
 
     setPictures(picture);
   };
@@ -106,6 +125,7 @@ export default function EditPost() {
           <ImageUploader
             withPreview={true}
             singleImage={true}
+            defaultImages={[`${process.env.REACT_APP_API_URL}${currentPost.featuredImage}`]}
             withIcon={true}
             onChange={onDrop}
             imgExtension={[".jpg"]}
