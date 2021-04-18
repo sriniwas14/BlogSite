@@ -3,6 +3,8 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { useParams } from "react-router-dom";
 import moment from 'moment'
 import axiosInstance from "../utils/Api";
+import { EditorState, convertFromRaw } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
 
 import { useData, useDataUpdate } from "../DataContext";
 import PostCard from '../Elements/PostCard';
@@ -11,6 +13,7 @@ export default function SinglePost() {
     const { posts } = useData();
     const { setPosts } = useDataUpdate();
     const [currentPost, setCurrentPost] = useState({});
+    const [storedState, setStoredState] = useState(EditorState.createEmpty())
 
     const { postId } = useParams();
 
@@ -34,7 +37,15 @@ export default function SinglePost() {
 
         console.log("B", getCurrentPost(postId))
         setCurrentPost(getCurrentPost(postId))
-    }, []);
+    }, [posts]);
+
+    useEffect(() => {
+        if(Object.keys(currentPost).length===0) return
+        console.log("Current Post", convertFromRaw(JSON.parse(currentPost.content)))
+        const content = convertFromRaw(JSON.parse(currentPost.content))
+        console.log("EMpty State", EditorState.createEmpty())
+        setStoredState(EditorState.createWithContent(content))
+    }, [currentPost])
 
     const getCurrentPost = (currentPostId) => {
         const post = posts.filter((p) => p._id === currentPostId);
@@ -50,7 +61,15 @@ export default function SinglePost() {
                         <img src={`${process.env.REACT_APP_API_URL}${currentPost?.featuredImage}`} />
                         <p className="csPostDate">Published {moment(currentPost?.postedOn).format('LL')}</p>
                         <h2>{currentPost?.title}</h2>
-                        <p>{currentPost?.content}</p>
+          <Editor
+            editorState={storedState}
+            toolbarClassName="toolbarClassName"
+            wrapperClassName="wrapperClassName"
+            editorClassName="editorClassName"
+            readOnly={true}
+            toolbarHidden={true}
+            onEditorStateChange={(eState) => null }
+          />
                     </Col>
                     <Col sm={4}>
                         {
