@@ -2,6 +2,7 @@ import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
+import { trimText } from '../utils/common'
 
 export default function MyPostCard({ post }) {
     return (
@@ -14,7 +15,7 @@ export default function MyPostCard({ post }) {
                         </Col>    
                         <Col className="csMPCDetails" sm={8}>
                             <h3>{ post.title }</h3>
-                            <p>{ post.excerpt }</p>
+                            <p>{ trimText(post.excerpt, 90) }</p>
                             <p className="csPostDate">Published {moment(post.postedOn).format('LL')}</p>
                         </Col>
                     </Row>

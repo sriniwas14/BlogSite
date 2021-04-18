@@ -3,6 +3,8 @@ import { Col, Row } from 'react-bootstrap'
 import moment from 'moment'
 import profilePlaceholder from '../assets/Profile.svg'
 import { Link } from 'react-router-dom'
+import { trimText } from '../utils/common'
+
 
 export default function PostCard(props) {
     const post = props.post
@@ -10,7 +12,6 @@ export default function PostCard(props) {
     const formatDate = (date) => {
         return moment(date).format('LL')
     }
-
     return (
         <Link className="csCardLink" to={`/posts/${post._id}`}>
         <Row className="csPostCard">
@@ -20,7 +21,7 @@ export default function PostCard(props) {
             <Col md={props.fullWidth ? 4 : 12}>
                 <p className="csPostDate">Published {formatDate(post.postedOn)}</p>
                 <h2 className="csPostTitle">{ post.title }</h2>
-                <p className="csPostExcerpt">{ post.excerpt }</p>
+                <p className="csPostExcerpt">{ trimText(post.excerpt, 144) }</p>
                 <div className="csPostUserInfoContainer">
                     <img alt={post.userInfo.firstName} className="csPostUserInfoProfilePic" src={ post.profilePicture ? post.profilePicture : profilePlaceholder } />
                     <div className="csPostUserInfo">
