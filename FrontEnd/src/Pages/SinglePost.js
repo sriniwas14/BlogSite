@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Row, Col } from 'react-bootstrap';
 import { useParams } from "react-router-dom";
-import moment from 'moment'
-import axiosInstance from "../utils/Api";
 import { EditorState, convertFromRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
+import moment from 'moment'
 
+import axiosInstance from "../utils/Api";
+
+import CustomLoader from '../Elements/CustomLoader';
 import { useData, useDataUpdate } from "../DataContext";
 import PostCard from '../Elements/PostCard';
 
@@ -15,18 +17,23 @@ export default function SinglePost() {
     const [currentPost, setCurrentPost] = useState({});
     const [storedState, setStoredState] = useState(EditorState.createEmpty())
 
+    const [loading, setLoading] = useState(false)
+
     const { postId } = useParams();
 
     // Load Post from the BackEnd
     useEffect(() => {
         if(posts.length>0) return
+        setLoading(true)
         axiosInstance.get(`/posts`, {})
         .then((response) => {
             if (!response.data.success) return 
             setPosts(response.data.data)
+            setLoading(false)
         })
         .catch(err => {
             console.log("Err ", err)
+            setLoading(false)
         })
     }, [])
 
@@ -51,7 +58,6 @@ export default function SinglePost() {
         const post = posts.filter((p) => p._id === currentPostId);
         return post[0]
     }
-
       
     return (
         <div>
@@ -78,6 +84,7 @@ export default function SinglePost() {
                     </Col>
                 </Row>
             </Container>
+            <CustomLoader show={loading} />
         </div>
     )
 }
