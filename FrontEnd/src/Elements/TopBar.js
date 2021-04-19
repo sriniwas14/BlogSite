@@ -49,7 +49,9 @@ export default function TopBar() {
                 <Container>
                     <Row>
                         <Col className="csLeftBox" sm={6}>
+                            <a class="csBranding" href="/" >
                             BlogSite
+                            </a>
                         </Col>
                         <Col className="csRightBox" sm={6}>
 

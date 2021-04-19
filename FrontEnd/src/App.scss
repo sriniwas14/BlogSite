@@ -22,6 +22,13 @@ h1,h2,h3 { font-family: "Roboto"; font-weight: 300 !important;  }
   .csLeftBox {
     font-family: $brandingFont;
     font-size: 28px;
+    .csBranding {
+      color: $primary-text;
+      &:hover {
+        color: $primary-text;
+        text-decoration: none;
+      }
+    }
   }
   .csRightBox {
     display: flex;
@@ -172,6 +179,9 @@ h1,h2,h3 { font-family: "Roboto"; font-weight: 300 !important;  }
     color: gray;
     margin: 15px 0;
   }
+  .csPostExcerpt {
+    color: gray;
+  }
   .csPostImage {
     border-radius: $appBorderRadius;
 
@@ -273,5 +283,17 @@ h1,h2,h3 { font-family: "Roboto"; font-weight: 300 !important;  }
   }
   .modal-body {
     padding: 4px !important;
+  }
+}
+
+// Editor
+
+.editorWrapper {
+  margin-bottom: 60px;
+  border: 1px solid #e9e9e9;
+  border-radius: $appBorderRadius;
+  .editorContentArea {
+    margin: 11px;
+    min-height: 450px !important;
   }
 }
