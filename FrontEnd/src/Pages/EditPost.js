@@ -1,7 +1,11 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Spinner } from "react-bootstrap";
 import ImageUploader from "react-images-upload";
 import { useParams } from "react-router-dom";
+import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+
 import axiosInstance from "../utils/Api";
 import { useData } from "../DataContext";
 
@@ -9,11 +13,12 @@ import { useData } from "../DataContext";
 export default function EditPost() {
   const { posts } = useData();
 
+  const [editorState, setEditorState] = useState(EditorState.createEmpty())
+
   const { postId } = useParams();
 
   const [currentPost, setCurrentPost] = useState({});
   const [loading, setLoading] = useState(false);
-  const [pictures, setPictures] = useState(null);
 
   // Load Post from Post Array
   useEffect(() => {
@@ -35,12 +40,22 @@ export default function EditPost() {
     })
   }, [])
 
+
+  useEffect(() => {
+    if(Object.keys(currentPost).length===0 || currentPost.content.length===0) return
+    const content = convertFromRaw(JSON.parse(currentPost.content))
+    setEditorState(EditorState.createWithContent(content))
+  }, [currentPost])
+
   const handleChange = (e) => {
     setCurrentPost((post) => ({ ...post, [e.target.name]: e.target.value }));
   };
 
   const handleSave = () => {
     setLoading(true);
+    currentPost.content = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
+    currentPost.content = currentPost.content.replace(/\//g, '')
+    
     axiosInstance
       .put(`/posts`, {
         ...currentPost,
@@ -56,6 +71,7 @@ export default function EditPost() {
   };
 
   const onDrop = (picture) => {
+    if(picture.length===0) return 
     const formData = new FormData();
     formData.append("featured", picture[0]);
     const config = {
@@ -71,8 +87,6 @@ export default function EditPost() {
       .catch((error) => {
         console.log("Err ", error);
       });
-
-    setPictures(picture);
   };
 
   return (
@@ -125,7 +139,7 @@ export default function EditPost() {
           <ImageUploader
             withPreview={true}
             singleImage={true}
-            defaultImages={[`${process.env.REACT_APP_API_URL}${currentPost.featuredImage}`]}
+            defaultImages={ [`${process.env.REACT_APP_API_URL}${currentPost.featuredImage}`]}
             withIcon={true}
             onChange={onDrop}
             imgExtension={[".jpg"]}
@@ -134,13 +148,12 @@ export default function EditPost() {
         </Col>
         <Col sm={12}>
           <h3>Content</h3>
-          <textarea
-            onChange={handleChange}
-            name="content"
-            value={currentPost?.content}
-            rows="15"
-            placeholder="Content"
-            className="csInput"
+          <Editor
+            editorState={editorState}
+            toolbarClassName="toolbarClassName"
+            wrapperClassName="editorWrapper"
+            editorClassName="editorContentArea"
+            onEditorStateChange={(eState) => setEditorState(eState)}
           />
         </Col>
       </Row>

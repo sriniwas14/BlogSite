@@ -44,10 +44,10 @@ export default function SinglePost() {
 
         console.log("B", getCurrentPost(postId))
         setCurrentPost(getCurrentPost(postId))
-    }, [posts]);
+    }, [posts, postId]);
 
     useEffect(() => {
-        if(Object.keys(currentPost).length===0) return
+        if(Object.keys(currentPost).length===0 || currentPost.content.length===0) return
         console.log("Current Post", convertFromRaw(JSON.parse(currentPost.content)))
         const content = convertFromRaw(JSON.parse(currentPost.content))
         console.log("EMpty State", EditorState.createEmpty())
